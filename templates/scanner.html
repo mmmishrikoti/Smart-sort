@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}AI waste scanner — SortSmart AI{% endblock %}
+{% block content %}
+<section class="subpage-hero page-wrap">
+  <div class="eyebrow"><span class="eyebrow-dot"></span> THE SORTSMART SCANNER</div>
+  <h1>A better bin starts<br>with <span class="text-green">one clear look.</span></h1>
+  <p>Upload an image or use your camera to identify one item at a time.</p>
+</section>
+<section class="scanner-layout page-wrap" data-scanner>
+  <div class="scanner-main">
+    <div class="scanner-card">
+      <div class="scanner-card-head"><div><span class="card-kicker">01 / ADD AN ITEM</span><h2>Your item, in focus.</h2></div><span class="privacy-chip">Images stay on this server</span></div>
+      <div class="drop-zone" data-drop-zone>
+        <div class="empty-state" data-empty-state>
+          <div class="upload-icon">↑</div><strong>Drop an image here</strong><span>or choose a file from your device</span>
+          <button type="button" class="button button-outline" data-browse>Choose image</button>
+          <span class="file-note">JPG, PNG or WebP · Max 10 MB</span>
+        </div>
+        <div class="preview-wrap" data-preview-wrap hidden>
+          <img data-preview alt="Selected waste item preview">
+          <button class="remove-image" type="button" data-remove aria-label="Remove selected image">×</button>
+          <span class="preview-name" data-preview-name></span>
+        </div>
+      </div>
+      <input class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" data-file-input>
+      <div class="scanner-actions">
+        <button type="button" class="button button-light" data-camera>Use camera</button>
+        <button type="button" class="button button-green" data-analyze disabled>Analyze item <span aria-hidden="true">↗</span></button>
+      </div>
+      <div class="camera-panel" data-camera-panel hidden>
+        <video data-video autoplay playsinline aria-label="Live camera preview"></video>
+        <div class="camera-actions"><button class="button button-green" type="button" data-capture>Capture photo</button><button class="button button-light" type="button" data-camera-close>Close camera</button></div>
+      </div>
+      <div class="loading-state" data-loading hidden><span class="spinner"></span><span>Taking a closer look…</span></div>
+      <p class="scanner-error" data-error role="alert" hidden></p>
+    </div>
+    <div class="result-card" data-result hidden aria-live="polite">
+      <div class="result-topline"><span class="card-kicker">02 / YOUR RESULT</span><span class="result-status" data-result-status></span></div>
+      <div class="result-content"><img data-result-image alt="Analyzed waste item"><div class="result-copy"><span class="result-label">BEST MATCH</span><h2 data-result-category></h2><p data-result-possible hidden></p><div class="confidence-row"><span>Model confidence</span><strong data-confidence></strong></div><div class="confidence-track"><span data-confidence-bar></span></div></div></div>
+      <div class="recommendation-grid"><div><span class="recommendation-icon">↗</span><strong>Disposal</strong><p data-disposal></p></div><div><span class="recommendation-icon">♻</span><strong>Recycling & reuse</strong><p data-recycling></p></div></div>
+      <div class="result-note">Sorting guidance varies by location. Please confirm with your local waste provider.</div>
+      <button class="text-button" type="button" data-scan-again>Scan another item <span aria-hidden="true">→</span></button>
+    </div>
+  </div>
+  <aside class="scanner-aside">
+    <div class="aside-card model-card"><span class="aside-icon">✳</span><span class="card-kicker">MODEL STATUS</span><h3 data-model-status>Checking model…</h3><p data-model-message>The scanner uses a trained image classifier. It won't invent a result if the model isn't ready.</p></div>
+    <div class="aside-card tip-card"><span class="card-kicker">A QUICK TIP</span><h3>Make the material easy to see.</h3><p>Use good light, keep one item in frame, and avoid busy backgrounds for a clearer result.</p><div class="tip-illustration">◌ <span>↗</span></div></div>
+    <a class="aside-link" href="{{ url_for('guide') }}">Not sure what to do? <strong>Browse the waste guide →</strong></a>
+  </aside>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/scanner.js') }}" defer></script>{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Analytics dashboard — SortSmart AI{% endblock %}
+{% block content %}
+<section class="dashboard page-wrap" data-dashboard>
+  <div class="dashboard-heading"><div><div class="eyebrow"><span class="eyebrow-dot"></span> YOUR SORTING SNAPSHOT</div><h1>Small actions,<br><span class="text-green">adding up.</span></h1><p>A look at the scans saved in this browser's SortSmart database.</p></div><a href="{{ url_for('scanner') }}" class="button button-green">Scan an item <span>↗</span></a></div>
+  <div class="stat-grid">
+    <article class="stat-card"><span class="stat-label">TOTAL SCANS</span><strong data-total>—</strong><span class="stat-caption">All-time saved scans</span><span class="stat-icon">⌗</span></article>
+    <article class="stat-card"><span class="stat-label">RECYCLABLE MATCHES</span><strong data-recyclable>—</strong><span class="stat-caption">Confident, non-trash results</span><span class="stat-icon green-stat">♻</span></article>
+    <article class="stat-card"><span class="stat-label">CATEGORIES FOUND</span><strong data-category-count>—</strong><span class="stat-caption">Distinct materials in saved scans</span><span class="stat-icon">✳</span></article>
+  </div>
+  <div class="analytics-grid">
+    <article class="panel chart-panel"><div class="panel-heading"><div><span class="card-kicker">SCAN ACTIVITY</span><h2>Daily scans</h2></div><select data-period aria-label="Chart period"><option value="weekly">Last 7 days</option><option value="daily">Today</option></select></div><canvas data-activity-chart aria-label="Daily scan activity chart"></canvas><div class="chart-empty" data-chart-empty hidden>Your scan activity will appear here.</div></article>
+    <article class="panel category-panel"><div class="panel-heading"><div><span class="card-kicker">MATERIAL MIX</span><h2>By category</h2></div></div><div class="category-chart" data-category-chart></div><div class="category-legend" data-category-legend></div></article>
+  </div>
+  <article class="panel evaluation-panel" data-evaluation>
+    <div class="panel-heading"><div><span class="card-kicker">HELD-OUT TEST SET</span><h2>Model evaluation</h2></div><span class="evaluation-samples" data-evaluation-samples></span></div>
+    <p class="evaluation-empty" data-evaluation-empty>No measured evaluation is available yet. Train the model to see real test-set results here.</p>
+    <div class="evaluation-content" data-evaluation-content hidden>
+      <div class="metric-grid">
+        <div><span>Accuracy</span><strong data-metric="accuracy"></strong></div>
+        <div><span>Macro precision</span><strong data-metric="macro_precision"></strong></div>
+        <div><span>Macro recall</span><strong data-metric="macro_recall"></strong></div>
+        <div><span>Macro F1</span><strong data-metric="macro_f1_score"></strong></div>
+      </div>
+      <div class="evaluation-tables">
+        <section class="confusion-wrap"><h3>Per-class scores</h3><div data-per-class></div></section>
+        <section class="confusion-wrap"><h3>Confusion matrix</h3><div data-confusion-matrix></div></section>
+      </div>
+    </div>
+  </article>
+  <article class="panel recent-panel"><div class="panel-heading"><div><span class="card-kicker">RECENT ACTIVITY</span><h2>Your latest scans</h2></div><a class="text-link" href="{{ url_for('history') }}">View all history →</a></div><div data-dashboard-recent class="recent-list"></div></article>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/dashboard.js') }}" defer></script>{% endblock %}

@@ -1,0 +1,40 @@
+# Environments and dependencies
+.venv/
+.vercel/
+.python-packages/
+.python-packages311/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.part
+*.log
+
+# Database & Uploads
+database/*.sqlite3
+uploads/*
+!uploads/.gitkeep
+
+# External Repositories
+TACO/
+
+# Datasets (Do NOT push multi-gigabyte images to GitHub)
+dataset/*
+!dataset/.gitkeep
+dataset-supplemental/
+dataset-yolo/train/
+dataset-yolo/val/
+dataset-yolo/test/
+
+# YOLO runs & base downloads
+runs/
+yolov8n.pt
+
+# Models (Keep lightweight trained weights, ignore temporary checkpoints)
+model/*
+!model/.gitkeep
+!model/labels.json
+!model/metrics.json
+!model/waste_classifier.keras
+!model/yolov8_best.pt

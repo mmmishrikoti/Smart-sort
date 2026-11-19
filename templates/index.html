@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}SortSmart AI — A clearer way to sort{% endblock %}
+{% block content %}
+<section class="hero page-wrap">
+  <div class="hero-copy">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> A smarter second look at waste</div>
+    <h1>Good things<br>go <span class="text-green">in the right bin.</span></h1>
+    <p class="hero-lede">Meet your camera-based sorting companion. Identify everyday materials, understand what to do next, and make better choices one item at a time.</p>
+    <div class="hero-actions">
+      <a class="button button-green" href="{{ url_for('scanner') }}">Start scanning <span aria-hidden="true">↗</span></a>
+      <a class="text-link" href="{{ url_for('guide') }}">Explore the waste guide <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="hero-footnote"><span class="tiny-check">✓</span> Practical guidance, with local rules in mind</div>
+  </div>
+  <div class="hero-art" aria-label="Illustration of recyclable materials">
+    <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+    <div class="art-label label-top"><span class="label-dot"></span> SORT WITH PURPOSE</div>
+    <div class="art-glass">♻</div>
+    <div class="waste-object object-can"><span></span></div>
+    <div class="waste-object object-bottle"><span></span></div>
+    <div class="waste-object object-box"><span>↗</span></div>
+    <div class="art-caption"><span class="caption-icon">✳</span><div><strong>One scan at a time</strong><small>Make the next choice count</small></div></div>
+  </div>
+</section>
+<section class="trust-strip">
+  <div><span class="strip-number">06</span><span>material categories</span></div>
+  <span class="strip-separator"></span>
+  <div><span class="strip-number">01</span><span>small action, daily</span></div>
+  <span class="strip-separator"></span>
+  <div><span class="strip-number">∞</span><span>ways to make an impact</span></div>
+</section>
+<section class="section page-wrap">
+  <div class="section-heading">
+    <div><div class="eyebrow">HOW SORTSMART WORKS</div><h2>Clarity in three<br>simple steps.</h2></div>
+    <p>Take the guesswork out of the bin. SortSmart gives you a helpful starting point for everyday recycling.</p>
+  </div>
+  <div class="steps-grid">
+    <article class="step-card"><div class="step-icon step-camera">⌗</div><span class="step-index">01 / CAPTURE</span><h3>Show us the item</h3><p>Take a photo or upload an image. A clear view of one item helps the model make its best guess.</p></article>
+    <article class="step-card"><div class="step-icon step-spark">✳</div><span class="step-index">02 / IDENTIFY</span><h3>Get an AI-assisted result</h3><p>Our image classifier estimates the material and shares a confidence score with every result.</p></article>
+    <article class="step-card"><div class="step-icon step-leaf">↗</div><span class="step-index">03 / SORT BETTER</span><h3>Know what to do next</h3><p>Explore practical disposal, recycling, and reuse ideas. Local collection rules always come first.</p></article>
+  </div>
+</section>
+<section class="category-band">
+  <div class="page-wrap band-inner">
+    <div><div class="eyebrow eyebrow-light">THE SORTSMART MATERIAL LIBRARY</div><h2>Six materials.<br>Smarter next steps.</h2><a class="text-link light-link" href="{{ url_for('guide') }}">Open the complete guide <span aria-hidden="true">→</span></a></div>
+    <div class="category-pills">
+      {% for key, item in {"cardboard":"Cardboard","glass":"Glass","metal":"Metal","paper":"Paper","plastic":"Plastic","trash":"Trash / other"}.items() %}
+      <a class="category-pill" href="{{ url_for('guide') }}#{{ key }}"><span class="material-dot dot-{{ key }}"></span>{{ item }}<span class="pill-arrow">↗</span></a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<section class="impact-section page-wrap">
+  <div class="impact-icon">✳</div>
+  <div><div class="eyebrow">A NOTE ON RESPONSIBLE SORTING</div><h2>AI is a guide.<br>Your local rules lead.</h2></div>
+  <p>Recycling programs vary by location. SortSmart offers a useful starting point, not a guarantee of local acceptance. When in doubt, check your waste provider's guidance.</p>
+</section>
+{% endblock %}

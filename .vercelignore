@@ -1,0 +1,11 @@
+.venv/
+.python-packages/
+.python-packages311/
+__pycache__/
+*.py[cod]
+train.py
+requirements-training.txt
+dataset/
+uploads/
+database/*.sqlite3
+model/*.keras

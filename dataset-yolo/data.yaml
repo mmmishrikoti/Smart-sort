@@ -1,0 +1,8 @@
+# SortSmart AI - TACO Dataset YAML for Ultralytics YOLO
+path: E:/Hackathons/smart sort/dataset-yolo
+train: train/images
+val: val/images
+test: test/images
+
+nc: 6
+names: ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']

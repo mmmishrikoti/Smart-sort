@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Scan history — SortSmart AI{% endblock %}
+{% block content %}
+<section class="history-page page-wrap" data-history>
+  <div class="dashboard-heading"><div><div class="eyebrow"><span class="eyebrow-dot"></span> YOUR SAVED RESULTS</div><h1>Every scan,<br><span class="text-green">all in one place.</span></h1><p>Search your recent scans or filter by material.</p></div><a href="{{ url_for('scanner') }}" class="button button-green">New scan <span>↗</span></a></div>
+  <div class="history-toolbar"><label class="search-field"><span>⌕</span><input type="search" placeholder="Search category or date…" data-history-search></label><select data-history-filter aria-label="Filter by category"><option value="all">All categories</option><option value="uncertain">Not sure yet</option><option value="cardboard">Cardboard</option><option value="glass">Glass</option><option value="metal">Metal</option><option value="paper">Paper</option><option value="plastic">Plastic</option><option value="trash">Trash / other</option></select><span class="history-count" data-history-count></span></div>
+  <p class="inline-error" data-filter-error role="alert" hidden></p>
+  <div class="history-list" data-history-list></div>
+</section>
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/history.js') }}" defer></script>{% endblock %}

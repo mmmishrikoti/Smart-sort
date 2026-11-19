@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Waste sorting guide — SortSmart AI{% endblock %}
+{% block content %}
+<section class="subpage-hero page-wrap">
+  <div class="eyebrow"><span class="eyebrow-dot"></span> THE SORTSMART FIELD GUIDE</div>
+  <h1>Waste less.<br>Sort with <span class="text-green">more confidence.</span></h1>
+  <p>A practical starting point for common materials. Collection rules differ from place to place—check your local provider.</p>
+</section>
+<section class="guide-grid page-wrap">
+  {% for key, item in categories.items() %}
+  <article class="guide-card" id="{{ key }}">
+    <div class="guide-card-top"><span class="material-badge badge-{{ key }}">{{ {"cardboard":"▧","glass":"◈","metal":"◉","paper":"▤","plastic":"♧","trash":"＋"}[key] }}</span><span class="guide-tag">{{ "Usually recyclable" if item.recyclable else "Check local guidance" }}</span></div>
+    <h2>{{ item.label }}</h2><p class="guide-examples">{{ item.examples }}</p>
+    <div class="guide-detail"><span>01</span><div><strong>Before it goes</strong><p>{{ item.disposal }}</p></div></div>
+    <div class="guide-detail"><span>02</span><div><strong>Recycle thoughtfully</strong><p>{{ item.recycling }}</p></div></div>
+    <div class="guide-detail"><span>03</span><div><strong>Give it another life</strong><p>{{ item.reuse }}</p></div></div>
+    <div class="impact-note"><span>✳</span>{{ item.impact }}</div>
+  </article>
+  {% endfor %}
+</section>
+<section class="guide-foot page-wrap"><span class="foot-spark">✳</span><div><h2>Special waste needs special care.</h2><p>Batteries, electronics, medicines, and hazardous materials often need dedicated collection. Never place them in recycling unless your local provider specifically allows it.</p></div></section>
+{% endblock %}
