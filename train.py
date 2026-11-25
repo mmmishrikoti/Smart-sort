@@ -157,7 +157,7 @@ def main():
         {name: split[name]["test"] for name in classes}, classes, args.batch_size, False
     )
 
-    model, _ = build_model(len(classes))
+    model, base = build_model(len(classes))
     callbacks = [
         tf.keras.callbacks.EarlyStopping(patience=3, restore_best_weights=True, monitor="val_loss")
     ]
@@ -168,10 +168,29 @@ def main():
         for i, count in enumerate(train_counts)
     }
     print(f"Calculated class weights: {json.dumps({classes[i]: round(w, 3) for i, w in class_weights.items()}, indent=2)}")
+    print("Phase 1: Training classification head...")
     model.fit(
         train_data,
         validation_data=validation_data,
         epochs=args.epochs,
+        callbacks=callbacks,
+        class_weight=class_weights,
+    )
+
+    # Phase 2: Fine-tune top layers of MobileNetV2
+    base.trainable = True
+    for layer in base.layers[:-35]:
+        layer.trainable = False
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
+        loss="categorical_crossentropy",
+        metrics=["accuracy"],
+    )
+    print("Phase 2: Fine-tuning top 35 layers of MobileNetV2 with lr=1e-4...")
+    model.fit(
+        train_data,
+        validation_data=validation_data,
+        epochs=6,
         callbacks=callbacks,
         class_weight=class_weights,
     )
