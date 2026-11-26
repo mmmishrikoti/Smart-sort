@@ -91,9 +91,10 @@
           throw constraintErr;
         }
       }
+      cameraPanel.hidden = false;
+      video.muted = true;
       video.srcObject = stream;
       await video.play().catch(() => {});
-      cameraPanel.hidden = false;
     } catch (cameraError) {
       if (cameraError.name === "NotAllowedError" || cameraError.name === "PermissionDeniedError") {
         showError("Camera permission was denied. Click the camera/tune icon in your browser's address bar to Allow camera access (and check Windows Privacy -> Camera), or upload an image.");
