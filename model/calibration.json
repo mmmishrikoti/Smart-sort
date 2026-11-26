@@ -1,0 +1,9 @@
+{
+  "temperature": 0.9379909548586549,
+  "fitted_on": "val",
+  "val_samples": 1051,
+  "val_nll_before": 1.0447825969190583,
+  "val_nll_after": 1.0433334169403694,
+  "val_ece_before": 0.03724758132853217,
+  "val_ece_after": 0.035842459297365514
+}

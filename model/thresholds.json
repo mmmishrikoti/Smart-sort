@@ -1,0 +1,8 @@
+{
+  "high_confidence_threshold": 0.9,
+  "medium_confidence_threshold": 0.55,
+  "margin_threshold": 0.3,
+  "val_target_precision": 0.95,
+  "val_precision_at_high": 0.9523809523809523,
+  "val_coverage_at_high": 0.17982873453853473
+}

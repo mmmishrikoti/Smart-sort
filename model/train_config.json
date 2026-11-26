@@ -1,0 +1,40 @@
+{
+  "backbone": "mobilenetv2",
+  "manifest": "dataset-merged\\manifest.csv",
+  "class_order": [
+    "cardboard",
+    "glass",
+    "metal",
+    "paper",
+    "plastic",
+    "trash"
+  ],
+  "image_size": [
+    224,
+    224
+  ],
+  "phase1_epochs": 8,
+  "phase2_epochs": 8,
+  "batch_size": 32,
+  "label_smoothing": 0.08,
+  "unfreeze_layers": 40,
+  "mixup": true,
+  "augmentations": [
+    "random_resized_crop(0.75-1.0)",
+    "random_horizontal_flip",
+    "random_rotation(0.08)",
+    "color_jitter(brightness=25, contrast=0.8-1.2, saturation=0.8-1.2, hue=0.04)",
+    "gaussian_blur_3x3(p=0.2)",
+    "random_erasing(p=0.25)",
+    "mixup(alpha=0.2, p=0.35)"
+  ],
+  "class_weights": {
+    "cardboard": 1.7679,
+    "glass": 1.4137,
+    "metal": 1.2362,
+    "paper": 1.3891,
+    "plastic": 0.4376,
+    "trash": 1.0952
+  },
+  "seed": 42
+}

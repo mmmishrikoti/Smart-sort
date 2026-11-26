@@ -1,0 +1,31 @@
+{
+  "temperature": 0.9379909548586549,
+  "test_samples": 1054,
+  "single_view": {
+    "accuracy": 0.6565464895635673,
+    "per_source_accuracy": {
+      "taco": 0.5870206489675516,
+      "trashnet": 0.7819148936170213
+    },
+    "ece_15_bins": 0.03163676355468954,
+    "avg_conf_correct": 0.7216378095189964,
+    "avg_conf_wrong": 0.5304343409411212,
+    "single_image_latency_ms": 157.97782499939785
+  },
+  "tta_4_views": {
+    "accuracy": 0.6603415559772297,
+    "per_source_accuracy": {
+      "taco": 0.5870206489675516,
+      "trashnet": 0.7925531914893617
+    },
+    "ece_15_bins": 0.025564764855942855,
+    "avg_conf_correct": 0.716967494697514,
+    "avg_conf_wrong": 0.5185522741241897,
+    "single_image_latency_ms": 165.05526166559625
+  },
+  "delta": {
+    "accuracy": 0.00379506641366234,
+    "ece_15_bins": -0.006071998698746688,
+    "latency_ms": 7.077436666198395
+  }
+}

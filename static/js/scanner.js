@@ -125,26 +125,105 @@
     }
   });
 
+  let lastScanId = null;
+
   function renderResult(data) {
+    lastScanId = data.id || null;
     const result = root.querySelector("[data-result]");
     const uncertain = data.uncertain;
-    root.querySelector("[data-result-status]").textContent = uncertain ? "LOW CONFIDENCE" : "MATCH FOUND";
+    const level = (data.confidence_level || (uncertain ? "low" : "high")).toUpperCase();
+    root.querySelector("[data-result-status]").textContent = uncertain
+      ? "LOW CONFIDENCE"
+      : `${level} CONFIDENCE`;
     root.querySelector("[data-result-status]").className = `result-status${uncertain ? " status-uncertain" : ""}`;
     root.querySelector("[data-result-category]").textContent = uncertain
       ? "Not sure yet"
       : data.recommendation.label;
     const possible = root.querySelector("[data-result-possible]");
-    possible.hidden = !uncertain;
-    possible.textContent = uncertain ? `Possible match: ${data.recommendation.label}` : "";
+    if (uncertain && Array.isArray(data.top_3) && data.top_3.length > 0) {
+      const topText = data.top_3.map((t) => `${t.category} (${Math.round(t.confidence * 100)}%)`).join(", ");
+      possible.textContent = `${data.message || "Try a closer photo."} Top guesses: ${topText}`;
+      possible.hidden = false;
+    } else if (uncertain) {
+      possible.textContent = `Possible match: ${data.recommendation.label}`;
+      possible.hidden = false;
+    } else {
+      possible.hidden = true;
+      possible.textContent = "";
+    }
     root.querySelector("[data-confidence]").textContent = `${Math.round(data.confidence * 100)}%`;
     root.querySelector("[data-confidence-bar]").style.width = `${Math.round(data.confidence * 100)}%`;
     root.querySelector("[data-disposal]").textContent = data.recommendation.disposal;
     root.querySelector("[data-recycling]").textContent =
       `${data.recommendation.recycling} ${data.recommendation.reuse || ""}`.trim();
     root.querySelector("[data-result-image]").src = data.image_url;
+
+    const fbStatus = root.querySelector("[data-feedback-status]");
+    const fbSelect = root.querySelector("[data-feedback-select]");
+    const fbSubmit = root.querySelector("[data-feedback-submit]");
+    const fbConsent = root.querySelector("[data-feedback-consent]");
+    if (fbStatus) fbStatus.hidden = true;
+    if (fbSelect) fbSelect.hidden = true;
+    if (fbSubmit) fbSubmit.hidden = true;
+    if (fbConsent) fbConsent.checked = false;
+
     result.hidden = false;
     result.scrollIntoView({ behavior: "smooth", block: "start" });
   }
+
+  async function sendFeedback(isCorrect, correctedCategory) {
+    const fbStatus = root.querySelector("[data-feedback-status]");
+    const fbConsent = root.querySelector("[data-feedback-consent]");
+    if (!fbConsent?.checked) {
+      fbStatus.textContent = "Please check the opt-in consent box first.";
+      fbStatus.hidden = false;
+      return;
+    }
+    if (!lastScanId) return;
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          scan_id: lastScanId,
+          is_correct: isCorrect,
+          corrected_category: correctedCategory,
+          consent: true,
+        }),
+      });
+      const out = await res.json();
+      if (!res.ok) throw new Error(out.error || "Could not save feedback.");
+      fbStatus.textContent = `Thanks! Saved under '${out.label}' for future training.`;
+      fbStatus.hidden = false;
+    } catch (err) {
+      fbStatus.textContent = err.message;
+      fbStatus.hidden = false;
+    }
+  }
+
+  root.querySelector("[data-feedback-yes]")?.addEventListener("click", () => sendFeedback(true, null));
+  root.querySelector("[data-feedback-no]")?.addEventListener("click", async () => {
+    const fbSelect = root.querySelector("[data-feedback-select]");
+    const fbSubmit = root.querySelector("[data-feedback-submit]");
+    if (!fbSelect.options.length) {
+      try {
+        const res = await fetch("/api/categories");
+        const data = await res.json();
+        (data.categories || ["cardboard", "glass", "metal", "paper", "plastic", "trash"]).forEach((c) => {
+          const opt = document.createElement("option");
+          opt.value = c;
+          opt.textContent = c;
+          fbSelect.appendChild(opt);
+        });
+      } catch (_) {}
+    }
+    fbSelect.hidden = false;
+    fbSubmit.hidden = false;
+  });
+  root.querySelector("[data-feedback-submit]")?.addEventListener("click", () => {
+    const fbSelect = root.querySelector("[data-feedback-select]");
+    sendFeedback(false, fbSelect.value);
+  });
   root.querySelector("[data-scan-again]").addEventListener("click", () => {
     root.querySelector("[data-result]").hidden = true;
     root.querySelector("[data-remove]").click();

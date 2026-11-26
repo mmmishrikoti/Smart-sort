@@ -39,6 +39,20 @@
       <div class="result-content"><img data-result-image alt="Analyzed waste item"><div class="result-copy"><span class="result-label">BEST MATCH</span><h2 data-result-category></h2><p data-result-possible hidden></p><div class="confidence-row"><span>Model confidence</span><strong data-confidence></strong></div><div class="confidence-track"><span data-confidence-bar></span></div></div></div>
       <div class="recommendation-grid"><div><span class="recommendation-icon">↗</span><strong>Disposal</strong><p data-disposal></p></div><div><span class="recommendation-icon">♻</span><strong>Recycling & reuse</strong><p data-recycling></p></div></div>
       <div class="result-note">Sorting guidance varies by location. Please confirm with your local waste provider.</div>
+      <div class="feedback-box" data-feedback-box style="margin-top:1rem;padding:0.9rem;border:1px solid #d9e2dc;border-radius:12px;background:#f8fbf9;">
+        <div style="font-weight:600;margin-bottom:0.4rem;">Was this prediction correct?</div>
+        <label style="display:flex;align-items:center;gap:0.45rem;font-size:0.88rem;margin-bottom:0.6rem;cursor:pointer;">
+          <input type="checkbox" data-feedback-consent>
+          <span>Opt-in: Save this image and label to improve future model training</span>
+        </label>
+        <div style="display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center;">
+          <button class="button button-outline" type="button" data-feedback-yes>Yes, correct</button>
+          <button class="button button-light" type="button" data-feedback-no>No, wrong</button>
+          <select data-feedback-select hidden style="padding:0.45rem 0.6rem;border-radius:8px;border:1px solid #c5d1c9;"></select>
+          <button class="button button-green" type="button" data-feedback-submit hidden>Save correction</button>
+        </div>
+        <div data-feedback-status style="margin-top:0.5rem;font-size:0.88rem;color:#2c5e3b;" hidden></div>
+      </div>
       <button class="text-button" type="button" data-scan-again>Scan another item <span aria-hidden="true">→</span></button>
     </div>
   </div>

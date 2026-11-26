@@ -13,8 +13,10 @@ __pycache__/
 
 # Database & Uploads
 database/*.sqlite3
+database/llm_cache.json
 uploads/*
 !uploads/.gitkeep
+feedback/
 
 # External Repositories
 TACO/
@@ -23,6 +25,7 @@ TACO/
 dataset/*
 !dataset/.gitkeep
 dataset-supplemental/
+dataset-merged/
 dataset-yolo/train/
 dataset-yolo/val/
 dataset-yolo/test/
@@ -31,10 +34,16 @@ dataset-yolo/test/
 runs/
 yolov8n.pt
 
+# Reports (keep metrics, plots, and summary; ignore raw error image dumps)
+reports/errors/
+
 # Models (Keep lightweight trained weights, ignore temporary checkpoints)
 model/*
 !model/.gitkeep
 !model/labels.json
 !model/metrics.json
+!model/calibration.json
+!model/thresholds.json
+!model/train_config.json
 !model/waste_classifier.keras
 !model/yolov8_best.pt

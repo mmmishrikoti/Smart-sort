@@ -1,0 +1,21 @@
+{
+  "temperature": 0.9379909548586549,
+  "val": {
+    "nll_before": 1.0447825969190583,
+    "nll_after": 1.0433334169403694,
+    "ece_before": 0.03724758132853217,
+    "ece_after": 0.035842459297365514
+  },
+  "test": {
+    "samples": 1054,
+    "accuracy": 0.618595825426945,
+    "nll_before": 0.9910534128317294,
+    "nll_after": 0.9884747218138052,
+    "ece_before": 0.019712546188168104,
+    "ece_after": 0.028180731312611007,
+    "avg_conf_correct_before": 0.6943921979545689,
+    "avg_conf_wrong_before": 0.47680235530581955,
+    "avg_conf_correct_after": 0.7135600673397893,
+    "avg_conf_wrong_after": 0.4932225515969826
+  }
+}

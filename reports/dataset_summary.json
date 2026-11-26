@@ -1,0 +1,53 @@
+{
+  "total_images": 6889,
+  "dedup_removed": 18,
+  "group_overlap_across_splits": 0,
+  "cleanlab_flagged_issues": 2293,
+  "counts_by_split": {
+    "train": {
+      "plastic": 1822,
+      "cardboard": 451,
+      "trash": 728,
+      "paper": 574,
+      "metal": 645,
+      "glass": 564
+    },
+    "val": {
+      "plastic": 386,
+      "cardboard": 103,
+      "paper": 125,
+      "metal": 151,
+      "trash": 183,
+      "glass": 103
+    },
+    "test": {
+      "plastic": 419,
+      "paper": 124,
+      "cardboard": 93,
+      "trash": 144,
+      "glass": 131,
+      "metal": 143
+    }
+  },
+  "counts_by_source": {
+    "custom_cup": {
+      "glass": 72
+    },
+    "taco": {
+      "plastic": 2147,
+      "cardboard": 246,
+      "trash": 918,
+      "paper": 240,
+      "metal": 531,
+      "glass": 225
+    },
+    "trashnet": {
+      "cardboard": 401,
+      "glass": 501,
+      "metal": 408,
+      "paper": 583,
+      "plastic": 480,
+      "trash": 137
+    }
+  }
+}
