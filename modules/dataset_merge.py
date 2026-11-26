@@ -1,4 +1,4 @@
-"""
+﻿"""
 Task 2: Source-aware dataset merging, perceptual-hash deduplication,
 stratified group 70/15/15 splitting, and Cleanlab label-issue detection.
 
@@ -24,7 +24,7 @@ from sklearn.model_selection import StratifiedGroupKFold
 from cleanlab.filter import find_label_issues
 
 
-ROOT = Path(r"e:\Hackathons\smart sort")
+ROOT = Path(__file__).resolve().parent.parent
 LABELS_PATH = ROOT / "model" / "labels.json"
 TRASHNET_DIR = ROOT / "dataset" / "trashnet-download" / "dataset-resized"
 SUPPLEMENTAL_DIR = ROOT / "dataset-supplemental"
@@ -293,7 +293,7 @@ def assign_source_aware_splits(records: list[dict], seed: int = 42) -> list[dict
 
 def materialize_merged_dataset(records: list[dict], labels: list[str], merged_dir: Path):
     if merged_dir.exists():
-        shutil.rmtree(merged_dir)
+        raise FileExistsError(f"Refusing to overwrite existing dataset: {merged_dir}")
     for sp in ("train", "val", "test"):
         for lbl in labels:
             (merged_dir / sp / lbl).mkdir(parents=True, exist_ok=True)
@@ -443,3 +443,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
