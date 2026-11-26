@@ -69,18 +69,41 @@
 
   root.querySelector("[data-camera]").addEventListener("click", async () => {
     error.hidden = true;
+    if (!window.isSecureContext) {
+      showError("Camera access requires http://127.0.0.1:5000, http://localhost:5000, or HTTPS. Switch to http://127.0.0.1:5000/scanner or upload an image.");
+      return;
+    }
     if (!navigator.mediaDevices?.getUserMedia) {
       showError("Camera access is not available in this browser. You can upload an image instead.");
       return;
     }
+    stopCamera();
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: "environment" } },
+          audio: false,
+        });
+      } catch (constraintErr) {
+        if (constraintErr.name === "OverconstrainedError" || constraintErr.name === "NotFoundError") {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        } else {
+          throw constraintErr;
+        }
+      }
       video.srcObject = stream;
+      await video.play().catch(() => {});
       cameraPanel.hidden = false;
     } catch (cameraError) {
-      showError(cameraError.name === "NotAllowedError"
-        ? "Camera permission was denied. Allow camera access or upload an image."
-        : "Could not open the camera. You can upload an image instead.");
+      if (cameraError.name === "NotAllowedError" || cameraError.name === "PermissionDeniedError") {
+        showError("Camera permission was denied. Click the camera/tune icon in your browser's address bar to Allow camera access (and check Windows Privacy -> Camera), or upload an image.");
+      } else if (cameraError.name === "NotFoundError" || cameraError.name === "DevicesNotFoundError") {
+        showError("No camera was detected on this device. Please upload an image instead.");
+      } else if (cameraError.name === "NotReadableError" || cameraError.name === "TrackStartError") {
+        showError("Camera is currently in use by another app. Close the other app and try again, or upload an image.");
+      } else {
+        showError("Could not open the camera. You can upload an image instead.");
+      }
     }
   });
   root.querySelector("[data-camera-close]").addEventListener("click", stopCamera);
